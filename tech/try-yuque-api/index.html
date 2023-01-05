@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+     
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css"> 
+    <link rel="stylesheet" href="../../fonts/academicons-1.8.6/css/academicons.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../img/logo.png"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="baidu-site-verification" content="code-HxM5pCr1nD" />
+    
+    
+    
+    
+    
+    
+    <title>基于语雀 API 的文档管理探索 - 沈维燕 | BioIT 爱好者</title> 
+    <meta property="og:title" content="基于语雀 API 的文档管理探索 - 沈维燕 | BioIT 爱好者">
+    
+
+    
+      
+    
+
+    
+
+    
+  
+    <link rel="stylesheet" href="https://www.shumlab.com/css/style.css"/>
+    <link rel="stylesheet" href="https://www.shumlab.com/css/fonts.css"/>
+    
+
+<link rel="stylesheet" href="https://www.shumlab.com/css/template-styles.css" />
+<link rel="stylesheet" href="https://www.shumlab.com/css/custom.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/github.min.css">
+
+
+  </head>
+
+  
+  <body class="tech">
+    
+    
+    <header class="intro-and-nav" role="banner">
+    <div>
+      <div class="intro">
+        <a class="logo" href="../../" aria-label="沈维燕 | BioIT 爱好者 home page">
+          <img src="https://www.shumlab.com/img/logo.png" alt="">
+        </a>
+        <p class="library-desc">
+          
+            Bio &amp; IT 爱好者
+          
+        </p>
+      </div>
+      <nav id="patterns-nav" class="patterns" role="navigation">
+        <h2 class="vh">Main navigation</h2>
+        <button id="menu-button" aria-expanded="false">
+          
+          目录
+        </button>
+        
+        <ul id="patterns-list">
+          
+          <li class="pattern">
+          
+          
+	  
+          
+          
+            <a href="../../" >
+              
+              首页
+            </a>
+          </li>
+          
+          <li class="pattern">
+          
+          
+	  
+          
+          
+            <a href="../../about/" >
+              
+              关于
+            </a>
+          </li>
+          
+          <li class="pattern">
+          
+          
+	  
+          
+          
+            <a href="../../tech/" >
+              
+              技术
+            </a>
+          </li>
+          
+          <li class="pattern">
+          
+          
+	  
+          
+          
+            <a href="../../note/" >
+              
+              随笔
+            </a>
+          </li>
+          
+          <li class="pattern">
+          
+          
+	  
+          
+          
+            <a href="../../portfolio/" >
+              
+              作品
+            </a>
+          </li>
+          
+          <li class="pattern">
+          
+          
+	  
+          
+          
+            <a href="../../archive/" >
+              
+              归档
+            </a>
+          </li>
+          
+          <li class="pattern">
+          
+          
+	  
+          
+          
+            <a href="../../feedback/" >
+              
+              留言
+            </a>
+          </li>
+          
+          <li class="pattern">
+          
+          
+	  
+          
+          
+            <a href="../../tags/" >
+              
+              标签
+            </a>
+          </li>
+          
+          <li class="pattern">
+          
+          
+	  
+          
+          
+            <a href="https://www.yuque.com/shenweiyan" >
+              
+              语雀
+            </a>
+          </li>
+          
+          
+
+<li class="pattern">&nbsp;&nbsp;</li>
+
+
+
+<li class="pattern"><a href="https://github.com/shumlab/shumlab.github.io/edit/master/content/tech/2022-12-02-try-yuque-api.md" target="_blank">编辑</a></li>
+
+
+<li class="pattern"><a href="../../tech/index.xml" type="application/rss+xml" title="RSS feed">订阅</a></li>
+
+<li class="pattern"><a href="../../license/" title="License">版权</a></li>
+
+
+        </ul>
+      </nav>
+    </div>
+    </header>
+
+    <article class="main">
+      <header class="title">
+        
+
+<h1>基于语雀 API 的文档管理探索</h1>
+
+
+
+<h4>沈维燕 &middot 
+2022-12-02</h4> 
+
+
+   
+  
+
+
+      </header>
+
+
+  
+
+  <blockquote>
+<p>编者：本文章同步自作者的<a href="https://www.yuque.com/shenweiyan/">语雀知识库</a>，请点击<a href="https://www.yuque.com/shenweiyan/cookbook/try-yuque-api">这里</a>阅读原文。</p>
+</blockquote>
+<p>一直以来都有不少人在纠结语雀文档的批量导出，殊不知语雀本身提供了相当丰富的 API —— 这些 API 正好可以帮助我们实现个人知识库的批量化导入导出和备份的目的。
+<a href="https://www.yuque.com/yuque/developer?view=doc_embed">开发者文档</a></p>
+<h2 id="基于-api-的应用">基于 API 的应用</h2>
+<p>语雀开发者文档 —— <a href="https://www.yuque.com/yuque/developer/api">https://www.yuque.com/yuque/developer/api</a> 的评论区列了不少基于 API 的应用和案例，感兴趣的可以去细看，这里简单列举几个个人觉得比较具有代表性的。</p>
+<ul>
+<li>Node SDK：<a href="https://github.com/yuque/sdk">https://github.com/yuque/sdk</a></li>
+<li>回馈一个 Python SDK &amp; 命令行工具：<a href="https://github.com/inhzus/juq">juq</a></li>
+<li>回馈一个同步仓库文章到本地的命令行工具：<a href="https://github.com/x-cold/yuque-hexo">yuque-hexo</a></li>
+<li>回馈一个 Py：<a href="https://github.com/Xarrow/simple-pyyuque">https://github.com/Xarrow/simple-pyyuque</a></li>
+<li>用 go 写的 SDK <a href="https://github.com/my-Sakura/go-yuque-api">https://github.com/my-Sakura/go-yuque-api</a></li>
+<li>语雀 Java sdk ：<a href="https://github.com/ryangsun/yuque-java-sdk">https://github.com/ryangsun/yuque-java-sdk</a></li>
+<li>补充一个 Python 的导出本地备份：<a href="https://github.com/shenweiyan/YQExportMD">https://github.com/shenweiyan/YQExportMD</a></li>
+</ul>
+<p>个人比较熟悉 Python，所以会对基于 Python 的一些 API 进行尝试和说明。</p>
+<h2 id="api-操作与说明">API 操作与说明</h2>
+<h3 id="获取个人的所有知识库">获取个人的所有知识库</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> requests
+headers <span style="color:#f92672">=</span> {
+	<span style="color:#e6db74">&#34;Content-Type&#34;</span>: <span style="color:#e6db74">&#34;application/json&#34;</span>,
+	<span style="color:#e6db74">&#34;User-Agent&#34;</span>: <span style="color:#e6db74">&#34;YQExportMD&#34;</span>,
+	<span style="color:#e6db74">&#34;X-Auth-Token&#34;</span>: <span style="color:#e6db74">&#39;XJ..........PQCoJtjrIO&#39;</span>
+}	
+response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>request(method<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;GET&#39;</span>, url<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;https://www.yuque.com/api/v2/users/shenweiyan/repos&#39;</span>, headers<span style="color:#f92672">=</span>headers)
+response<span style="color:#f92672">.</span>json()
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">Out[<span style="color:#ae81ff">16</span>]:
+{<span style="color:#e6db74">&#39;data&#39;</span>: [{<span style="color:#e6db74">&#39;id&#39;</span>: <span style="color:#ae81ff">227777</span>,
+   <span style="color:#e6db74">&#39;type&#39;</span>: <span style="color:#e6db74">&#39;Book&#39;</span>,
+   <span style="color:#e6db74">&#39;slug&#39;</span>: <span style="color:#e6db74">&#39;cookbook&#39;</span>,
+   <span style="color:#e6db74">&#39;name&#39;</span>: <span style="color:#e6db74">&#39;技术私房菜&#39;</span>,
+   <span style="color:#e6db74">&#39;user_id&#39;</span>: <span style="color:#ae81ff">126032</span>,
+   <span style="color:#e6db74">&#39;description&#39;</span>: <span style="color:#e6db74">&#39;原创技术文章，记录工作，学习的知识汇总。&#39;</span>,
+   <span style="color:#e6db74">&#39;creator_id&#39;</span>: <span style="color:#ae81ff">126032</span>,
+   <span style="color:#e6db74">&#39;public&#39;</span>: <span style="color:#ae81ff">1</span>,
+   <span style="color:#e6db74">&#39;items_count&#39;</span>: <span style="color:#ae81ff">218</span>,
+   <span style="color:#e6db74">&#39;likes_count&#39;</span>: <span style="color:#ae81ff">0</span>,
+   <span style="color:#e6db74">&#39;watches_count&#39;</span>: <span style="color:#ae81ff">182</span>,
+   <span style="color:#e6db74">&#39;content_updated_at&#39;</span>: <span style="color:#e6db74">&#39;2022-12-02T07:27:32.714Z&#39;</span>,
+   <span style="color:#e6db74">&#39;updated_at&#39;</span>: <span style="color:#e6db74">&#39;2022-12-02T07:27:33.000Z&#39;</span>,
+   <span style="color:#e6db74">&#39;created_at&#39;</span>: <span style="color:#e6db74">&#39;2019-03-01T12:22:24.000Z&#39;</span>,
+   <span style="color:#e6db74">&#39;namespace&#39;</span>: <span style="color:#e6db74">&#39;shenweiyan/cookbook&#39;</span>,
+   <span style="color:#e6db74">&#39;user&#39;</span>: {<span style="color:#e6db74">&#39;id&#39;</span>: <span style="color:#ae81ff">126032</span>,
+    <span style="color:#e6db74">&#39;type&#39;</span>: <span style="color:#e6db74">&#39;User&#39;</span>,
+    <span style="color:#e6db74">&#39;login&#39;</span>: <span style="color:#e6db74">&#39;shenweiyan&#39;</span>,
+    <span style="color:#e6db74">&#39;name&#39;</span>: <span style="color:#e6db74">&#39;章鱼猫先生&#39;</span>,
+    <span style="color:#e6db74">&#39;description&#39;</span>: <span style="color:#e6db74">&#39;乐于分享，爱好码字，沉迷于折腾  | Bio &amp; IT 爱好者&#39;</span>,
+    <span style="color:#e6db74">&#39;avatar_url&#39;</span>: <span style="color:#e6db74">&#39;https://cdn.yuque.com/yuque/0/2018/jpeg/126032/1526460304504-avatar/f6903e58-a5ec-4c79-9d61-f8c8e0e3f83c.jpeg&#39;</span>,
+    <span style="color:#e6db74">&#39;followers_count&#39;</span>: <span style="color:#ae81ff">765</span>,
+    <span style="color:#e6db74">&#39;following_count&#39;</span>: <span style="color:#ae81ff">95</span>,
+    <span style="color:#e6db74">&#39;created_at&#39;</span>: <span style="color:#e6db74">&#39;2018-05-16T08:29:24.000Z&#39;</span>,
+    <span style="color:#e6db74">&#39;updated_at&#39;</span>: <span style="color:#e6db74">&#39;2022-12-02T07:44:57.000Z&#39;</span>,
+    <span style="color:#e6db74">&#39;_serializer&#39;</span>: <span style="color:#e6db74">&#39;v2.user&#39;</span>},
+   <span style="color:#e6db74">&#39;_serializer&#39;</span>: <span style="color:#e6db74">&#39;v2.book&#39;</span>},
+  {<span style="color:#e6db74">&#39;id&#39;</span>: <span style="color:#ae81ff">174556</span>,
+   <span style="color:#e6db74">&#39;type&#39;</span>: <span style="color:#e6db74">&#39;Book&#39;</span>,
+   <span style="color:#e6db74">&#39;slug&#39;</span>: <span style="color:#e6db74">&#39;own&#39;</span>,
+   <span style="color:#e6db74">&#39;name&#39;</span>: <span style="color:#e6db74">&#39;杂文私房菜&#39;</span>,
+   <span style="color:#f92672">.....</span>
+  },
+  <span style="color:#f92672">......</span>
+}		  
+</code></pre></div><h3 id="获取某个知识库内所有文档">获取某个知识库内所有文档</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">url  <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://www.yuque.com/api/v2/repos/227777/docs&#34;</span>  <span style="color:#75715e"># 227777 为对应知识库的 repo_id</span>
+resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>request(<span style="color:#e6db74">&#34;GET&#34;</span>, url, headers<span style="color:#f92672">=</span>headers)
+repo_docs <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</span>json()		<span style="color:#75715e"># 得到一个以 data 为 key 的字典</span>
+docs <span style="color:#f92672">=</span> repo_docs[<span style="color:#e6db74">&#39;data&#39;</span>]	<span style="color:#75715e"># 返回一个包含该知识库所有文档的 list</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">In [<span style="color:#ae81ff">20</span>]: docs[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>keys()     <span style="color:#75715e"># 每个 list 是一个包含了 27 个 key 的字典</span>
+Out[<span style="color:#ae81ff">20</span>]: dict_keys([<span style="color:#e6db74">&#39;id&#39;</span>, <span style="color:#e6db74">&#39;slug&#39;</span>, <span style="color:#e6db74">&#39;title&#39;</span>, <span style="color:#e6db74">&#39;description&#39;</span>, <span style="color:#e6db74">&#39;user_id&#39;</span>, <span style="color:#e6db74">&#39;book_id&#39;</span>, <span style="color:#e6db74">&#39;format&#39;</span>, <span style="color:#e6db74">&#39;public&#39;</span>, <span style="color:#e6db74">&#39;status&#39;</span>, <span style="color:#e6db74">&#39;view_status&#39;</span>, <span style="color:#e6db74">&#39;read_status&#39;</span>, <span style="color:#e6db74">&#39;likes_count&#39;</span>, <span style="color:#e6db74">&#39;read_count&#39;</span>, <span style="color:#e6db74">&#39;comments_count&#39;</span>, <span style="color:#e6db74">&#39;content_updated_at&#39;</span>, <span style="color:#e6db74">&#39;created_at&#39;</span>, <span style="color:#e6db74">&#39;updated_at&#39;</span>, <span style="color:#e6db74">&#39;published_at&#39;</span>, <span style="color:#e6db74">&#39;first_published_at&#39;</span>, <span style="color:#e6db74">&#39;draft_version&#39;</span>, <span style="color:#e6db74">&#39;last_editor_id&#39;</span>, <span style="color:#e6db74">&#39;word_count&#39;</span>, <span style="color:#e6db74">&#39;cover&#39;</span>, <span style="color:#e6db74">&#39;custom_description&#39;</span>, <span style="color:#e6db74">&#39;last_editor&#39;</span>, <span style="color:#e6db74">&#39;book&#39;</span>, <span style="color:#e6db74">&#39;_serializer&#39;</span>])
+</code></pre></div><h3 id="获取某个指定文档的内容">获取某个指定文档的内容</h3>
+<h4 id="基于-api">基于 API</h4>
+<p>最终的<code>doc['data']['body']</code>即为对应文章正文内容。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">repo_id, slug <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;227777&#34;</span>, <span style="color:#e6db74">&#34;webstack-hugo&#34;</span>
+url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://www.yuque.com/api/v2/repos/</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">/docs/</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (repo_id, slug)
+res <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>request(<span style="color:#e6db74">&#34;GET&#34;</span>, url, headers<span style="color:#f92672">=</span>headers)
+doc <span style="color:#f92672">=</span> res<span style="color:#f92672">.</span>json() 	<span style="color:#75715e"># 返回一个包含 [&#39;abilities&#39;, &#39;data&#39;] key 的字典</span>
+
+In [<span style="color:#ae81ff">30</span>]: doc<span style="color:#f92672">.</span>keys()
+Out[<span style="color:#ae81ff">30</span>]: dict_keys( [<span style="color:#e6db74">&#39;abilities&#39;</span>, <span style="color:#e6db74">&#39;data&#39;</span>] 
+
+In [<span style="color:#ae81ff">31</span>]: doc[<span style="color:#e6db74">&#39;data&#39;</span>]<span style="color:#f92672">.</span>keys()
+Out[<span style="color:#ae81ff">31</span>]: dict_keys([<span style="color:#e6db74">&#39;id&#39;</span>, <span style="color:#e6db74">&#39;slug&#39;</span>, <span style="color:#e6db74">&#39;title&#39;</span>, <span style="color:#e6db74">&#39;book_id&#39;</span>, <span style="color:#e6db74">&#39;book&#39;</span>, <span style="color:#e6db74">&#39;user_id&#39;</span>, <span style="color:#e6db74">&#39;creator&#39;</span>, <span style="color:#e6db74">&#39;format&#39;</span>, <span style="color:#e6db74">&#39;body&#39;</span>, <span style="color:#e6db74">&#39;body_draft&#39;</span>, <span style="color:#e6db74">&#39;body_html&#39;</span>, <span style="color:#e6db74">&#39;body_lake&#39;</span>, <span style="color:#e6db74">&#39;body_draft_lake&#39;</span>, <span style="color:#e6db74">&#39;public&#39;</span>, <span style="color:#e6db74">&#39;status&#39;</span>, <span style="color:#e6db74">&#39;view_status&#39;</span>, <span style="color:#e6db74">&#39;read_status&#39;</span>, <span style="color:#e6db74">&#39;likes_count&#39;</span>, <span style="color:#e6db74">&#39;comments_count&#39;</span>, <span style="color:#e6db74">&#39;content_updated_at&#39;</span>, <span style="color:#e6db74">&#39;deleted_at&#39;</span>, <span style="color:#e6db74">&#39;created_at&#39;</span>, <span style="color:#e6db74">&#39;updated_at&#39;</span>, <span style="color:#e6db74">&#39;published_at&#39;</span>, <span style="color:#e6db74">&#39;first_published_at&#39;</span>, <span style="color:#e6db74">&#39;word_count&#39;</span>, <span style="color:#e6db74">&#39;cover&#39;</span>, <span style="color:#e6db74">&#39;description&#39;</span>, <span style="color:#e6db74">&#39;custom_description&#39;</span>, <span style="color:#e6db74">&#39;hits&#39;</span>, <span style="color:#e6db74">&#39;_serializer&#39;</span>])				   
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">In [<span style="color:#ae81ff">26</span>]: doc
+Out[<span style="color:#ae81ff">26</span>]:
+{<span style="color:#e6db74">&#39;abilities&#39;</span>: {<span style="color:#e6db74">&#39;update&#39;</span>: <span style="color:#66d9ef">True</span>, <span style="color:#e6db74">&#39;destroy&#39;</span>: <span style="color:#66d9ef">True</span>},
+ <span style="color:#e6db74">&#39;data&#39;</span>: {<span style="color:#e6db74">&#39;id&#39;</span>: <span style="color:#ae81ff">49148406</span>,
+  <span style="color:#e6db74">&#39;slug&#39;</span>: <span style="color:#e6db74">&#39;webstack-hugo&#39;</span>,
+  <span style="color:#e6db74">&#39;title&#39;</span>: <span style="color:#e6db74">&#39;WebStack-Hugo | 一个静态响应式网址导航主题&#39;</span>,
+  <span style="color:#e6db74">&#39;book_id&#39;</span>: <span style="color:#ae81ff">227777</span>,
+  <span style="color:#e6db74">&#39;book&#39;</span>: {<span style="color:#e6db74">&#39;id&#39;</span>: <span style="color:#ae81ff">227777</span>,
+   <span style="color:#e6db74">&#39;type&#39;</span>: <span style="color:#e6db74">&#39;Book&#39;</span>,
+   <span style="color:#e6db74">&#39;slug&#39;</span>: <span style="color:#e6db74">&#39;cookbook&#39;</span>,
+   <span style="color:#e6db74">&#39;name&#39;</span>: <span style="color:#e6db74">&#39;技术私房菜&#39;</span>,
+   <span style="color:#e6db74">&#39;user_id&#39;</span>: <span style="color:#ae81ff">126032</span>,
+   <span style="color:#e6db74">&#39;description&#39;</span>: <span style="color:#e6db74">&#39;原创技术文章，记录工作，学习的知识汇总。&#39;</span>,
+   <span style="color:#e6db74">&#39;creator_id&#39;</span>: <span style="color:#ae81ff">126032</span>,
+   <span style="color:#e6db74">&#39;public&#39;</span>: <span style="color:#ae81ff">1</span>,
+   <span style="color:#e6db74">&#39;items_count&#39;</span>: <span style="color:#ae81ff">218</span>,
+   <span style="color:#e6db74">&#39;likes_count&#39;</span>: <span style="color:#ae81ff">0</span>,
+   <span style="color:#e6db74">&#39;watches_count&#39;</span>: <span style="color:#ae81ff">182</span>,
+   <span style="color:#e6db74">&#39;content_updated_at&#39;</span>: <span style="color:#e6db74">&#39;2022-12-02T07:27:32.714Z&#39;</span>,
+   <span style="color:#e6db74">&#39;updated_at&#39;</span>: <span style="color:#e6db74">&#39;2022-12-02T07:27:33.000Z&#39;</span>,
+   <span style="color:#e6db74">&#39;created_at&#39;</span>: <span style="color:#e6db74">&#39;2019-03-01T12:22:24.000Z&#39;</span>,
+   <span style="color:#e6db74">&#39;namespace&#39;</span>: <span style="color:#e6db74">&#39;shenweiyan/cookbook&#39;</span>,
+   <span style="color:#e6db74">&#39;user&#39;</span>: {<span style="color:#e6db74">&#39;id&#39;</span>: <span style="color:#ae81ff">126032</span>,
+    <span style="color:#e6db74">&#39;type&#39;</span>: <span style="color:#e6db74">&#39;User&#39;</span>,
+    <span style="color:#e6db74">&#39;login&#39;</span>: <span style="color:#e6db74">&#39;shenweiyan&#39;</span>,
+    <span style="color:#e6db74">&#39;name&#39;</span>: <span style="color:#e6db74">&#39;章鱼猫先生&#39;</span>,
+    <span style="color:#e6db74">&#39;description&#39;</span>: <span style="color:#e6db74">&#39;乐于分享，爱好码字，沉迷于折腾  | Bio &amp; IT 爱好者&#39;</span>,
+    <span style="color:#e6db74">&#39;avatar_url&#39;</span>: <span style="color:#e6db74">&#39;https://cdn.yuque.com/yuque/0/2018/jpeg/126032/1526460304504-avatar/f6903e58-a5ec-4c79-9d61-f8c8e0e3f83c.jpeg&#39;</span>,
+    <span style="color:#e6db74">&#39;books_count&#39;</span>: <span style="color:#ae81ff">27</span>,
+    <span style="color:#e6db74">&#39;public_books_count&#39;</span>: <span style="color:#ae81ff">12</span>,
+    <span style="color:#e6db74">&#39;followers_count&#39;</span>: <span style="color:#ae81ff">765</span>,
+    <span style="color:#e6db74">&#39;following_count&#39;</span>: <span style="color:#ae81ff">95</span>,
+    <span style="color:#e6db74">&#39;created_at&#39;</span>: <span style="color:#e6db74">&#39;2018-05-16T08:29:24.000Z&#39;</span>,
+    <span style="color:#e6db74">&#39;updated_at&#39;</span>: <span style="color:#e6db74">&#39;2022-12-02T07:44:57.000Z&#39;</span>,
+    <span style="color:#e6db74">&#39;_serializer&#39;</span>: <span style="color:#e6db74">&#39;v2.user&#39;</span>},
+   <span style="color:#e6db74">&#39;_serializer&#39;</span>: <span style="color:#e6db74">&#39;v2.book&#39;</span>},
+  <span style="color:#e6db74">&#39;user_id&#39;</span>: <span style="color:#ae81ff">126032</span>,
+  <span style="color:#e6db74">&#39;creator&#39;</span>: {<span style="color:#e6db74">&#39;id&#39;</span>: <span style="color:#ae81ff">126032</span>,
+   <span style="color:#e6db74">&#39;type&#39;</span>: <span style="color:#e6db74">&#39;User&#39;</span>,
+   <span style="color:#e6db74">&#39;login&#39;</span>: <span style="color:#e6db74">&#39;shenweiyan&#39;</span>,
+   <span style="color:#e6db74">&#39;name&#39;</span>: <span style="color:#e6db74">&#39;章鱼猫先生&#39;</span>,
+   <span style="color:#e6db74">&#39;description&#39;</span>: <span style="color:#e6db74">&#39;乐于分享，爱好码字，沉迷于折腾  | Bio &amp; IT 爱好者&#39;</span>,
+   <span style="color:#e6db74">&#39;avatar_url&#39;</span>: <span style="color:#e6db74">&#39;https://cdn.yuque.com/yuque/0/2018/jpeg/126032/1526460304504-avatar/f6903e58-a5ec-4c79-9d61-f8c8e0e3f83c.jpeg&#39;</span>,
+   <span style="color:#e6db74">&#39;books_count&#39;</span>: <span style="color:#ae81ff">27</span>,
+   <span style="color:#e6db74">&#39;public_books_count&#39;</span>: <span style="color:#ae81ff">12</span>,
+   <span style="color:#e6db74">&#39;followers_count&#39;</span>: <span style="color:#ae81ff">765</span>,
+   <span style="color:#e6db74">&#39;following_count&#39;</span>: <span style="color:#ae81ff">95</span>,
+   <span style="color:#e6db74">&#39;created_at&#39;</span>: <span style="color:#e6db74">&#39;2018-05-16T08:29:24.000Z&#39;</span>,
+   <span style="color:#e6db74">&#39;updated_at&#39;</span>: <span style="color:#e6db74">&#39;2022-12-02T07:44:57.000Z&#39;</span>,
+   <span style="color:#e6db74">&#39;_serializer&#39;</span>: <span style="color:#e6db74">&#39;v2.user&#39;</span>},
+  <span style="color:#e6db74">&#39;format&#39;</span>: <span style="color:#e6db74">&#39;lake&#39;</span>,
+  <span style="color:#e6db74">&#39;body&#39;</span>: <span style="color:#e6db74">&#39;:::tips</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">**📢 如果您参考本主题构建了属于你自己的网址导航，欢迎在评论区留下你网站的访问链接。**</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">:::\......</span>
+   <span style="color:#f92672">.....</span>
+   
+</code></pre></div><h4 id="不用-api">不用 API</h4>
+<p>如果我们知道语雀某一篇公开文档的链接，如 <a href="https://www.yuque.com/yuque/developer/api">https://www.yuque.com/yuque/developer/api</a>，我们可以在该 url 后增加 <strong>&quot;/markdown?plain=true&amp;linebreak=false&amp;anchor=false&quot;</strong>，即可在浏览器直接查阅该文档的 markdown 格式内容。</p>
+<blockquote>
+<p><a href="https://www.yuque.com/yuque/developer/api/markdown?plain=true&amp;linebreak=false&amp;anchor=false">https://www.yuque.com/yuque/developer/api/markdown?plain=true&amp;linebreak=false&amp;anchor=false</a></p>
+</blockquote>
+<p>
+<div class="post-img-view">
+<a data-fancybox="gallery" href="https://cos.shenlab.cn/yuque/0/2022/png/126032/1669971411350-a3ecd66d-c480-4f12-aaba-1c63ac20e998.png">
+<img src="https://cos.shenlab.cn/yuque/0/2022/png/126032/1669971411350-a3ecd66d-c480-4f12-aaba-1c63ac20e998.png" alt="image.png"  />
+</a>
+</div>
+
+
+接下来的操作就很简单了，我们可以直接复制该 markdown 内容，或者用程序直接抓取下来。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">In [<span style="color:#ae81ff">46</span>]: res <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>request(<span style="color:#e6db74">&#34;GET&#34;</span>, <span style="color:#e6db74">&#39;https://www.yuque.com/yuque/developer/api/markdown?plain=true&amp;linebreak=false&amp;anchor=false&#39;</span>, headers<span style="color:#f92672">=</span>headers)
+
+In [<span style="color:#ae81ff">47</span>]: res<span style="color:#f92672">.</span>text
+Out[<span style="color:#ae81ff">47</span>]: <span style="color:#e6db74">&#39;## 基本路径</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">所有 API 的路径都以 `https://www.yuque.com/api/v2` 开头。</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">空间下访问 API 的域名需要使用空间对应的域名，例如空间域名为 customspace.yuque.com， 则 API 的基础路径为 `https://customspace.yuque.com/api/v2`。</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">建议开启 follow redirect 能力:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">```bash</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74"># -L To follow redirect with Curl</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">curl -L -X &#34;POST&#34; &#34;https://www.yuque.com/api/v2/...&#34; </span><span style="color:#ae81ff">\\\n</span><span style="color:#e6db74">     -H </span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">User-Agent: your_name</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74"> </span><span style="color:#ae81ff">\\\n</span><span style="color:#e6db74">     -H </span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">X-Auth-Token: your_token</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74"> </span><span style="color:#ae81ff">\\\n</span><span style="color:#e6db74">     -H </span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">Content-Type: application/json</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74"> </span><span style="color:#ae81ff">\\\n</span><span style="color:#e6db74">     -d $</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">{}</span><span style="color:#ae81ff">\&#39;\n</span><span style="color:#e6db74">```</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">## HTTP Verbs</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">| Verb | Description |</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">| --- | --- |</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">| GET | 用于获取数据 |</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">| POST | 用于创建数据 |</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">| PUT | 用于修改部分数据，例如一个文档标题，正文 |</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">| DELETE | 用于删除数据 |</span><span style="color:#ae81ff">\n\n\n</span><span style="color:#e6db74">## HTTP 提交数据说明</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">当</span><span style="color:#ae81ff">\xa0</span><span style="color:#e6db74">**POST**,</span><span style="color:#ae81ff">\xa0</span><span style="color:#e6db74">**PUT**</span><span style="color:#ae81ff">\xa0</span><span style="color:#e6db74">请求的时候，请确保 Request Content-Type 是 `application/json`</span><span style="color:#ae81ff">\xa0</span><span style="color:#e6db74">类型。</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">```json</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">req.Headers.Add(&#34;Content-Type&#34;, &#34;application/json&#34;)</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">```</span><span style="color:#ae81ff">\n\n\n</span><span style="color:#e6db74">## User-Agent Header</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">为了确保我们能知道访问者是谁，API 要求必须传递 `User-Agent` Header，否则将会拒绝请求。</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">例如:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">```go</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">req.Headers.Add(&#34;User-Agent&#34;, &#34;这里可以填应用名称&#34;)</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">```</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">## 用户认证</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">:::info</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">语雀所有的开放 API 都需要 Token 验证之后才能访问。</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">:::</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">语雀 API 目前使用 Token 机制来实现用户认证。</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">你需要在请求的 HTTP Headers 传入 `X-Auth-Token` 带入用户的 Token 信息，用于认证。</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">获取 Token 可通过点击语雀的个人头像，并进入</span><span style="color:#ae81ff">\xa0</span><span style="color:#e6db74">[个人设置](/settings/tokens)</span><span style="color:#ae81ff">\xa0</span><span style="color:#e6db74">页面拿到，如下图：</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">![image.png](https://cos.shenlab.cn/yuque/0/2019/png/84145/1556263208113-272c18c0-2608-48b5-81b0-141b49ef432f.png)</span><span style="color:#ae81ff">\xa0</span><span style="color:#e6db74">标准格式，请按照标准方式进行转换。</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>
+
+In [<span style="color:#ae81ff">48</span>]:
+</code></pre></div><h2 id="语雀图片备份处理">语雀图片备份处理</h2>
+<p>语雀的图片可以直接下载到本地（参考：<a href="https://github.com/shenweiyan/YQExportMD">https://github.com/shenweiyan/YQExportMD</a>），或者使用镜像回源的方式直接转存到阿里云/腾讯云&hellip;..的对象存储中（参考：<a href="https://www.yuque.com/shenweiyan/cookbook/sync-from-yuque-to-oss?view=doc_embed">语雀图片的同步迁移解决方案</a>），这里暂时不展开。</p>
+<h2 id="写在最后">写在最后</h2>
+<p>基于 API 的语雀文章备份/导出，对于 markdown 的文档是一个不错的解决方案，但对于数据表、小记和其他一些记录则不适用，目前也暂时没有更好的方案。</p>
+<p>所以，如果你使用语雀作为你的 markdown 博客平台，只要 API 还在备份目前是不需要担心的！</p>
+
+
+  <footer>
+  
+<nav class="post-nav">
+  <span class="nav-prev"><a href="../../tech/ncbi-blast-configure/">NCBI Blast 源码编译安装方法</a><br/>&larr;</span>
+  <span class="nav-next"></span>
+</nav>
+<script type="text/javascript">
+document.addEventListener('keyup', function(e) {
+  if (e.target.nodeName.toUpperCase() != 'BODY') return;
+  var url = false;
+  if (e.which == 37) {  
+    
+    url = '\/tech\/ncbi-blast-configure\/';
+    
+  } else if (e.which == 39) {  
+    
+  }
+  if (url) window.location = url;
+});
+</script>
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script async src="https://www.shumlab.com/js/fix-toc.js"></script>
+<script async src="https://www.shumlab.com/js/center-img.js"></script>
+<script async src="https://www.shumlab.com/js/right-quote.js"></script>
+<script async src="https://www.shumlab.com/js/fix-footnote.js"></script>
+<script async src="https://www.shumlab.com/js/math-code.js"></script>
+<script async src="https://www.shumlab.com/js/external-link.js"></script>
+<script async src="https://www.shumlab.com/js/alt-title.js"></script>
+<script async src="https://www.shumlab.com/js/header-link.js"></script>
+<script async src="https://www.shumlab.com/js/dom-scripts.js"></script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+
+
+
+  
+
+  <div class="copyright">
+      <script type="text/javascript" src="//rf.revolvermaps.com/0/0/6.js?i=5m6pzaeh5ar&amp;m=0&amp;c=ff0000&amp;cr1=ffffff&amp;f=arial&amp;l=0&amp;bv=0" async="async"></script>
+
+  
+      <br/><br/><a href="https://www.yuque.com/shenweiyan"><img src="https://img.shields.io/badge/%E8%AF%AD%E9%9B%80-%E4%BA%91%E7%AB%AF%E7%9F%A5%E8%AF%86%E5%BA%93-blueviolet" alt="yuque"></a> <a href="https://www.bioitee.com"><img src="https://img.shields.io/badge/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7-BioIT%E7%88%B1%E5%A5%BD%E8%80%85-important" alt="wechat"></a> <a href="https://weibo.com/u/6020143196"><img src="https://img.shields.io/badge/%E5%BE%AE%E5%8D%9A-%E7%AB%A0%E9%B1%BC%E7%8C%AB%E5%85%88%E7%94%9F-blue" alt="weibo"></a> <a href="https://github.com/shenweiyan"><img src="https://img.shields.io/badge/GitHub-shenweiyan-green" alt="github"></a>
+  
+
+  
+       
+      <br/><br/>© Powered by <a href="https://github.com/shenweiyan/ICS-Hugo-Theme">ICS-Hugo-Theme</a> and  <a href="https://gohugo.io">Hugo</a> | <a href="https://www.bioitee.com/">Bio IT 爱好者</a> 2018 - 2023 | <a href="http://beian.miit.gov.cn/">粤ICP备16023717号</a><br/>
+  
+
+  </div>
+  
+
+  </footer>
+  </article>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  </body>
+</html>
+
